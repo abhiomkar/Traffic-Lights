@@ -21,7 +21,7 @@ urlpatterns += patterns('',
                 (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.STATIC_ROOT }),
                )
 
-    # urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += staticfiles_urlpatterns()
     
-    # urlpatterns += patterns('', url(r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': 'static/', # settings.STATIC_ROOT, }),)
-    #urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# urlpatterns += patterns('', url(r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': 'static/', settings.STATIC_ROOT, }),)
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

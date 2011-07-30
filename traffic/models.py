@@ -14,11 +14,9 @@ class Checkin(models.Model):
     longitude = models.FloatField()
     checkin_time = models.DateTimeField(auto_now_add=True)
     street_addr = models.CharField(max_length=9999, default="")
+    status_update = models.CharField(max_length=9999, default="")
     traffic_dense_level = models.IntegerField(max_length=5, default=0)
     plus_ones = models.IntegerField(max_length=9999, default=0)
-
-    class Meta:
-        # unique_together = ("field1", "field2")
 
     def checkins_nearby_you(lat, lgt):
         # Checkin.objects.filter()

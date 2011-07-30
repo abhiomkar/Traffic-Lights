@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 
-from shorturl.models import *
+from traffic.models import *
 
 import urlparse
 
@@ -18,11 +18,25 @@ def homepage(request):
     return render_to_response("homepage.html", c)
 
 def post(request):
-    #long_url = request.POST.get('nsfw_url', '')
-    #domain = "http://" + request.META.get('HTTP_HOST', 'nsfw.in/') + "/"
+    latitude = request.POST.get('latitude', '')
+    longitude = request.POST.get('longitude', '')
+    street_address = request.POST.get('street_address', '')
+    traffic_dense_level = request.POST.get('traffic_dense_level', '')
+    latlng = request.POST.get('latlng', '')
+    print('lat: %s' % latitude)
+    print('lng: %s' % longitude)
+    print('street_address: %s' % street_address)
+    print('traffic_dense_level: %s' % traffic_dense_level)
+
+    #domain = "http://" + request.META.get('HTTP_HOST', 'trlights.com/') + "/"
 
     #_url = URL()
     #short_url = _url.saveURL(long_url)
+    _checkin = Checkin()
+    response = _checkin.do_checkin(latitude, longitude, street_address, traffic_dense_level)
+    
+    response = "Checked in at " + street_address
+    return HttpResponse(response, mimetype='text/html')
     
     #response = "<tr>                                         \
                   #<td class='tleft'><a href='%s'>%s</a></td> \
@@ -30,6 +44,4 @@ def post(request):
                 #</tr>" % (long_url, long_url, domain+short_url)
 
     #return HttpResponse(response, mimetype='text/html')
-    pass
-    return HttpResponse("nill")
 
