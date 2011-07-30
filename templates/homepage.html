@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+<!-- the id on the containing div determines the page width. -->
+<!-- #doc = 750px; #doc2 = 950px; #doc3 = 100%; #doc4 = 974px -->
+{% block content %}
+<div id="doc" class="homepage container"> 
+    <header id="header" class="container"> 
+    <h1><a href="http://nsfw.in/" class="title logo">Traffic Lights</a></h1> 
+    <div class="clearboth"></div>
+    </header> 
+
+    <form name="" class="" method="POST" action="/"> {% csrf_token %}
+        <input type="submit" class="nsfw_create_btn" value="Make link safer &rarr;" />
+    </form> 
+
+</div>
+{% endblock %}

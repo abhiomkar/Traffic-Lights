@@ -1,0 +1,76 @@
+Traffic Lights:
+
+user input:
+T_CHECKIN
+latitude (float)
+longitude (float)
+timestamp (datetime)
+street address (string)
+traffic code (short) ex: 0, 1, 2, 3
+plus ones (integer)
+
+Traffic Dense:
+0 - (none)
+1 - (green) no traffic
+2 - (orange) moving traffic
+3 - (red) traffic jam
+
+checkin user:
+-------------
+user checks in at his/her current location, by clicking on the 3 possible buttons (green, orange or red) - insert to T_CHECKIN
+
+roaming user:
+-------------
+based on his/her current location he'll find nearest checkins (green, orange or red) - query from T_CHECKIN
+
+User Views:
+===========
+
+Homepage (User Traffic Checkin Page)
+- map showing user's current location (first half of the screen)
+- three traffic light buttons (second half of the screen) - click to checkin buttons checking
+- Roam button - user can check traffic jams around (it can be red, orange or green)
+
+Traffic Dense Near You
+- user can check traffic information near by him.
+- show: street address name, checkin time, click on the item to go to google map with overlay
+
+
+Tools/Softwares Required
+MacVim
+Zsh
+AWS
+Cherokee Web Server
+PostgreSQL
+Django
+Google Maps API
+jQuery
+Javascript/HTML/CSS
+
+
+Logins:
+=======
+phppgadmin -
+http://abhiomkar.in:1111/phppgadmin/
+
+PostgreSQL
+postgres / OpenHack#2011
+
+SQL:
+====
+
+latitude (float)
+longitude (float)
+timestamp (datetime)
+street address (string)
+traffic code (short) ex: 0, 1, 2, 3
+plus ones (integer)
+
+CREATE TABLE T_CHECKIN (
+    code        char(5) CONSTRAINT firstkey PRIMARY KEY,
+    title       varchar(40) NOT NULL,
+    did         integer NOT NULL,
+    date_prod   date,
+    kind        varchar(10),
+    len         interval hour to minute
+);
