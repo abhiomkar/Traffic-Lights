@@ -16,6 +16,8 @@
     display: none;
 }
 
+.floatright { float: right; }
+
 section, article, aside, header, footer, nav, dialog, figure {
 	display:block;
 }

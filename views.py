@@ -30,10 +30,9 @@ def post(request):
 
     #domain = "http://" + request.META.get('HTTP_HOST', 'trlights.com/') + "/"
 
-    #_url = URL()
-    #short_url = _url.saveURL(long_url)
     _checkin = Checkin()
-    response = _checkin.do_checkin(latitude, longitude, street_address, traffic_dense_level)
+    _checkin.do_checkin(latitude, longitude, street_address, traffic_dense_level)
+
     
     response = "Checked in at " + street_address
     return HttpResponse(response, mimetype='text/html')

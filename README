@@ -46,7 +46,7 @@ Django
 Google Maps API
 jQuery
 Javascript/HTML/CSS
-
+GeoDjango
 
 Logins:
 =======
@@ -77,3 +77,15 @@ CREATE TABLE T_CHECKIN (
     kind        varchar(10),
     len         interval hour to minute
 );
+
+Shell Quick Testing:
+===================
+
+Point Testing - 
+
+from traffic.models import *
+from django.contrib.gis.geos import Point
+_checkin = Checkin()
+lat, lgt, str_addr, tdc = 37.617112, -122.3831031, "sf airport", 3
+_checkin = Checkin(latitude = lat, longitude = lgt, street_addr = str_addr,  traffic_dense_level = tdc,  point = Point(lat, lgt) )
+_checkin.save()
