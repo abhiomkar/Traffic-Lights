@@ -9,7 +9,7 @@
     <a href="/checkins" class="check_roads floatright">Check Roads</a>
     <div class="clearboth"></div>
     </header> 
-    <div id="map_canvas" style="width:98%%; height:200px"></div>
+    <div id="map_canvas" style="width:96%; height:200px"></div>
 
     <div class="checkin_buttons">
         <strong>Loading Current Location...</strong>
@@ -84,6 +84,10 @@
             }
         }
 
+        function stopWatch() {
+            navigator.geolocation.clearWatch(watchProcess);
+        }
+
         function geoloc_query(pos) {
             if(en_buttons == false) {
                 en_buttons = true;
@@ -113,6 +117,7 @@
                     success: function(response) {
                                 // DEBUG
                                 console.log('got response');
+                                $(this).attr('value', 'Updated.');
                                 var $alertdiv = $('<div id="notification"/>');
                                 $alertdiv.text(response);
                                 $alertdiv.bind('click', function() {
@@ -134,6 +139,9 @@
                 return false;
               }
 
+            $(".checkin_buttons input").not(this).slideToggle('fast');
+            $(this).animate({ width: '100%' }, 'fast');
+            $(this).attr('value', 'Updating...');
 
             tr_dense_lvl = parseInt($(this).attr("name"));
 

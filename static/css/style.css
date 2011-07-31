@@ -772,3 +772,7 @@ a.check_roads {
 .container {
     overflow: hidden;
 }
+
+.checkin_buttons input {
+    width: 31%;
+}
