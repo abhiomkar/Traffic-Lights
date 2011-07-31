@@ -701,3 +701,60 @@ input[type="submit"]:active {
       opacity: .9;
         display:none;
 }
+
+.tr_dense3 {
+    background: red !important;
+}
+.tr_dense2 {
+    background: orange !important;
+}
+.tr_dense1 {
+    background: green !important;
+}
+
+.tr_dense3, .tr_dense2, .tr_dense1 {
+    float: left;
+    width: 20px;
+    padding: 10px 0;
+}
+
+.checkins_nearby {
+    border-top: 1px solid #999;
+}
+.tr_result {
+    display: block;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+    height: 38px;
+    color: #444;
+    font-weight: bold;
+}
+
+.tr_result a {
+    color: #444;
+} 
+
+.tr_addr {
+    float: left;
+    padding: 10px 0;
+    padding-left: 6px;
+}
+
+a.check_roads {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: #BBB url('/static/images/btn_gradient.png') top repeat-x;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 100em;
+    -webkit-border-radius: 100em;
+    -moz-border-radius: 100em;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    text-shadow: 0px 1px 1px white;
+    color: black;
+    padding: 6px 10px;
+    font-weight: bold;
+}

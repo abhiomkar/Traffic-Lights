@@ -17,6 +17,16 @@ def homepage(request):
     c.update(csrf(request))
     return render_to_response("homepage.html", c)
 
+def checkins_nearby_you(request):
+    return render_to_response("checkins.html")
+
+def getcheckins(request):
+    latitude = request.GET.get('latitude', '')
+    longitude = request.GET.get('longitude', '')
+    _checkin = Checkin()
+    response = _checkin.checkins_nearby_you(latitude, longitude)
+    return HttpResponse(response)
+
 def post(request):
     latitude = request.POST.get('latitude', '')
     longitude = request.POST.get('longitude', '')

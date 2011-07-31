@@ -6,6 +6,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'views.homepage', name='home'),
+    url(r'^checkins$', 'views.checkins_nearby_you'),
+    url(r'^\-getcheckins/?$', 'views.getcheckins'),
     url(r'^\-post/?$', 'views.post'),
     # url(r'^(?P<shorturl_code>[a-zA-Z0-9]+)$', 'views.show_longurl'),
     # url(r'^nsfw/', include('nsfw.foo.urls')),

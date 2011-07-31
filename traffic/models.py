@@ -24,10 +24,36 @@ class Checkin(models.Model):
     point = models.PointField(srid=24370)
     objects = models.GeoManager()
 
-    def checkins_nearby_you(lat, lgt):
+    def checkins_nearby_you(self, lat, lgt):
         # Checkin.objects.filter()
         # Checkin.objects.filter(point__distance_lte=(pnt, D(km=6)))
-        return
+        pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=24370)
+
+        qs = Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('point')[0:6]
+        #res = '{'
+        #for i, q in enumerate(qs):
+            #ll = '%s,%s' % (q.latitude, q.longitude)
+            #res += "latlgt%s: " % i + "'%s'" % ll
+            #res += ", "
+
+        #if res.endswith(", "):
+            #res = res[:-2]
+
+        #res += "}"
+
+        res = '['
+        for i, q in enumerate(qs):
+            ll = '%s,%s' % (q.latitude, q.longitude)
+            street_addr = q.street_addr
+            tr_dense = q.traffic_dense_level 
+            res += "{latlng: '%s', street_addr: '%s', tr_dense: %s}" % (ll, street_addr, tr_dense)
+            res += ", "
+
+        if res.endswith(", "):
+            res = res[:-2]
+
+        res += "]"
+        return res
 
     def do_checkin(self, lat, lgt, st_addr, tdc):
         """ Do checkin for the user

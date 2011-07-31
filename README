@@ -89,3 +89,8 @@ _checkin = Checkin()
 lat, lgt, str_addr, tdc = 37.617112, -122.3831031, "sf airport", 3
 _checkin = Checkin(latitude = lat, longitude = lgt, street_addr = str_addr,  traffic_dense_level = tdc,  point = Point(lat, lgt) )
 _checkin.save()
+
+pnt = Point(12.9128118, 77.6092188)
+print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=4)))])
+print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('point')])
+
