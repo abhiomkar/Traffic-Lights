@@ -46,7 +46,8 @@ class Checkin(models.Model):
             ll = '%s,%s' % (q.latitude, q.longitude)
             street_addr = q.street_addr
             tr_dense = q.traffic_dense_level 
-            res += "{latlng: '%s', street_addr: '%s', tr_dense: %s}" % (ll, street_addr, tr_dense)
+            checkin_time = q.checkin_time 
+            res += "{latlng: '%s', street_addr: '%s', tr_dense: %s, checkin_time: '%s'}" % (ll, street_addr, tr_dense, checkin_time)
             res += ", "
 
         if res.endswith(", "):

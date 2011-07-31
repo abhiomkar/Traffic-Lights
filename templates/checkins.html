@@ -82,7 +82,8 @@
                 ll = data[i].latlng.split(',');
                 street_addr = data[i].street_addr;
                 tr_dense = data[i].tr_dense;
-                $(".checkins_nearby").append("<div class='tr_result'><a href='javascript:void(0);'><span class='tr_dense"+tr_dense+"'>&nbsp;</span><span name='"+ll_s+"' class='tr_addr'>"+street_addr+"</span></a></div><div class='clearboth'></div>");
+                checkin_time = data[i].checkin_time;
+                $(".checkins_nearby").append("<div class='tr_result'><a href='javascript:void(0);'><span class='tr_dense"+tr_dense+"'>&nbsp;</span><span name='"+ll_s+"' class='tr_addr'>"+street_addr+"</span></a><span class='checkin_time'>"+checkin_time+"</span></div><div class='clearboth'></div>");
                 lat = ll[0];
                 lng = ll[1];
                 latlng = new google.maps.LatLng(lat, lng);
@@ -127,6 +128,7 @@
                             };
                             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
                             showResultsMap(eval(response));
+                            jQuery('.checkin_time').each(function() { $(this).text(jQuery.timeago($(this).text())) })
                         },
                 data: { "latitude": cur_latitude,
                         "longitude": cur_longitude
