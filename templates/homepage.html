@@ -110,6 +110,7 @@
 
         // EVENTS
         $(".checkin_buttons input").click(function() {
+            var self = this;
             var postCheckin = function() {
              $.ajax({
                     url: '/-post/',
@@ -117,7 +118,7 @@
                     success: function(response) {
                                 // DEBUG
                                 console.log('got response');
-                                $(this).attr('value', 'Updated.');
+                                $(self).attr('value', 'Updated.');
                                 var $alertdiv = $('<div id="notification"/>');
                                 $alertdiv.text(response);
                                 $alertdiv.bind('click', function() {

@@ -33,21 +33,10 @@ input {
 	padding: 0.4em;
 }
 
-form.nsfw_post {
-    width: 600px;
-}
-
 textarea {
 	-webkit-box-shadow: #AAA 0px 0px 4px;
 	resize: none;
 }
-
-.nsfw_create_btn {
-    float: right;
-    position: relative;
-    right: -12px;
-    top: -27px;
-}    
 
 .created_urls {
     position: relative;
@@ -261,11 +250,6 @@ html {
 	font-family: "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
 }
 
-#make, #nsfw-link-go, #nsfw-error {
-/* 	background:url("../images/pattern-red.gif?1270837590") repeat scroll 0 0 #802323; */
-	background:transparent repeat scroll 0 0 #802323;
-}
-
 #make textarea#url-container {
 	width: 700px;
 	height: 90px;
@@ -287,71 +271,6 @@ html {
 	-moz-box-shadow: 0 0 10px rgba(51, 51, 51, 0.5)
 	-webkit-box-shadow: 0 0 10px rgba(51, 51, 51, 0.5)
 	box-shadow: 0 0 10px rgba(51, 51, 51, 0.5)
-}
-
-.nsfwsmith {
-	-moz-border-radius: 5px 5px 5px 5px;
-/* 	-moz-box-shadow: 0 1px 1px 0 #777777; */
-	-webkit-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px;
-/* 	-webkit-box-shadow: 0 1px 1px 0 #777777; */
-	margin: 0 0.2em 0.5em;
-/* 	overflow: hidden; */
-	padding: 0em 1em 1.5em;
-}
-
-#make .nsfw_create {
-	font-weight: normal;
-	font-size: 14px;
-	float: right;
-}
-
-#nsfw-link ul.safe-links li {
-	background: white;
-	-moz-border-radius:15px 15px 15px 15px;
-	-webkit-border-radius:15px 15px 15px 15px;
-	border-radius: 15px;
-	margin-bottom:5px;
-	padding:8px 15px 8px 15px;
-/* 	-moz-box-shadow: 0 0 2px #333333 inset; */
-/*	Chrome Bug for inset shadow - Chromium Issue #29427
-	-webkit-box-shadow: 0 0 2px #333333 inset; */
-	border: 1px solid #9E9E9E;
-/* 	box-shadow: 0 0 2px #333333 inset; */
-}
-
-#nsfw-link ul.safe-links small {
-	float: right;
-}
-
-#nsfw-link-go {
-	background: white;
-	-moz-border-radius:15px 15px 15px 15px;
-	-webkit-border-radius:15px 15px 15px 15px;
-	border: 1px solid #9E9E9E;
-	margin-bottom:5px;
-	padding:8px 15px 8px 15px;
-	margin-bottom: -1px;
-	height: 16px;
-	clear: both;
-}
-
-#nsfw-link-go #link-to-visit {
-	display: inline-block;
-	float: left;
-}
-
-#nsfw-link-go #link-to-visit a:hover {
-	text-decoration: underline;
-}
-
-#nsfw-link-go #link-go {
-	display: inline;
-	float: right;
-}
-
-#nsfw-link-go #link-go a:hover {
-	color: #23578F;
 }
 
 #moredetails {
