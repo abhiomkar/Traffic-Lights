@@ -703,13 +703,19 @@ input[type="submit"]:active {
 }
 
 .tr_dense3 {
-    background: red !important;
+    background: red;
+    background: -moz-linear-gradient( top, #FF6E42 0%, #DE2C2C);
+    background: -webkit-gradient( linear, left top, left bottom, from(#FF6E42), to(#DE2C2C));
 }
 .tr_dense2 {
-    background: orange !important;
+    background: orange;
+    background: -moz-linear-gradient( top, #FFC942 0%, #F70);
+    background: -webkit-gradient( linear, left top, left bottom, from(#FFC942), to(#F70));
 }
 .tr_dense1 {
-    background: green !important;
+    background: green;
+    background: -moz-linear-gradient( top, #5AB32D 0%, #116311);
+    background: -webkit-gradient( linear, left top, left bottom, from(#5AB32D), to(#116311));
 }
 
 .tr_dense3, .tr_dense2, .tr_dense1 {
@@ -728,6 +734,7 @@ input[type="submit"]:active {
     height: 38px;
     color: #444;
     font-weight: bold;
+    background: #F9F7EE;
 }
 
 .tr_result a {
@@ -735,9 +742,11 @@ input[type="submit"]:active {
 } 
 
 .tr_addr {
-    float: left;
     padding: 10px 0;
     padding-left: 6px;
+    overflow: hidden;
+    position: relative;
+    top: 10px;
 }
 
 a.check_roads {
@@ -757,4 +766,8 @@ a.check_roads {
     color: black;
     padding: 6px 10px;
     font-weight: bold;
+}
+
+.container {
+    overflow: hidden;
 }
