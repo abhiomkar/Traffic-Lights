@@ -665,7 +665,9 @@ input[type="submit"]:active {
     padding-left: 6px;
     overflow: hidden;
     position: relative;
-    top: 10px;
+    top: -3px;
+
+    /*top: 10px;*/
     white-space:nowrap;
 }
 
@@ -700,8 +702,8 @@ a.check_roads {
     color: #555;
     font-weight: normal;
     display: block;
-    position: relative;
     right: 5px;
-    top: 32px;
+    position: relative;
+    /*top: 32px;*/
     float: right;
 }
