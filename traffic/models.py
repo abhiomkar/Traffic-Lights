@@ -29,7 +29,7 @@ class Checkin(models.Model):
         # Checkin.objects.filter(point__distance_lte=(pnt, D(km=6)))
         pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=24370)
 
-        qs = Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('point')[0:6]
+        qs = Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('-checkin_time')[0:6]
         #res = '{'
         #for i, q in enumerate(qs):
             #ll = '%s,%s' % (q.latitude, q.longitude)
