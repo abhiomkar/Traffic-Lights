@@ -29,6 +29,16 @@
 
 <script type="text/javascript">
 
+var watchProcess = null,
+en_buttons = false,
+cur_latitude = 0,
+cur_longitude = 0,
+cur_str_addr = 'here',
+tr_dense_lvl = 0,
+cur_latlng= '0,0',
+latlng;
+
+
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
@@ -45,20 +55,16 @@
         return cookieValue;
     }
     
-  // global
-  var latlng; 
-
-  function initialize(lot, lng) {
-    lot = typeof(lot) != 'undefined' ? lot : -34.397;
-    lng = typeof(lng) != 'undefined' ? lng : 150.644;
-    latlng = new google.maps.LatLng(lot, lng);
-    var myOptions = {
-      zoom: 14,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    var marker = new google.maps.Marker({
+  function setMap(lot, lng) {
+	var lot = typeof(lot) != 'undefined' ? lot : -34.397,
+    lng = typeof(lng) != 'undefined' ? lng : 150.644,     
+	latlng = new google.maps.LatLng(lot, lng),	
+	myOptions = {
+	    zoom: 14,
+	    center: latlng,
+	    mapTypeId: google.maps.MapTypeId.ROADMAP }, 
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions),
+    marker = new google.maps.Marker({
           position: latlng,
           title:"My Current Location!"
       });
@@ -66,100 +72,102 @@
     marker.setMap(map);
   }
 
-    $(document).ready(function() {
-        var watchProcess = null,
-        en_buttons = false,
-        cur_latitude = 0,
-        cur_longitude = 0,
-        cur_str_addr = '',
-        tr_dense_lvl = 0,
-        cur_latlng= '0,0',
-        geocoder = new google.maps.Geocoder();
+  function initiate_watchlocation() {
+      if (watchProcess == null) {
+          watchProcess = navigator.geolocation.watchPosition(setPosition, function(err){ }, {maximumAge: 8000});
+      }
+  }
 
-        navigator.geolocation.getCurrentPosition(geoloc_query);
+  function getAddress(cur_latitude, cur_longitude) {
+	var latlng = new google.maps.LatLng(cur_latitude, cur_longitude);
+	geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {  
+            cur_str_addr = results[0].formatted_address;
+          }
+        } else {
+          alert("Geocoder failed due to: " + status);
+        }});	
+  }
 
-        function initiate_watchlocation() {
-            if (watchProcess == null) {
-                watchProcess = navigator.geolocation.watchPosition(geoloc_query);
-            }
-        }
+  function setPosition(pos) {
+      if(en_buttons == false) {
+          en_buttons = true;
+          $(".checkin_buttons strong").hide();
+          $(".checkin_buttons input").show();
+      }
+      cur_latitude = pos.coords.latitude;
+      cur_longitude = pos.coords.longitude;
+      cur_latlng = cur_latitude + ',' + cur_longitude;
+	  
+	  // async'ly get the current address
+	  setTimeout('getAddress(cur_latitude, cur_longitude)', 10);
+      console.log('lat: ' + pos.coords.latitude);
+      console.log('lng: ' + pos.coords.longitude);
+      setMap(pos.coords.latitude, pos.coords.longitude);
+  }
 
-        function stopWatch() {
-            navigator.geolocation.clearWatch(watchProcess);
-        }
 
-        function geoloc_query(pos) {
-            if(en_buttons == false) {
-                en_buttons = true;
-                $(".checkin_buttons strong").hide();
-                $(".checkin_buttons input").show();
-            }
-            cur_latitude = pos.coords.latitude;
-            cur_longitude = pos.coords.longitude;
-            cur_latlng= cur_latitude + ',' + cur_longitude
+$(document).ready(function() {
+	geocoder = new google.maps.Geocoder();
+    // navigator.geolocation.getCurrentPosition(setPosition);
 
-            console.log('lat: ' + pos.coords.latitude);
-            console.log('lng: ' + pos.coords.longitude);
-            initialize(pos.coords.latitude, pos.coords.longitude);
-        }
+    function stopWatch() {
+        navigator.geolocation.clearWatch(watchProcess);
+    }
 
-        // Set Map to Current Location
-        initialize();
-        // Keep Watching the User's Current Location
-        initiate_watchlocation();
+	initiate_watchlocation();
 
-        // EVENTS
-        $(".checkin_buttons input").click(function() {
-            var self = this;
-            var postCheckin = function() {
-             $.ajax({
-                    url: '/-post/',
-                    type: 'POST',
-                    success: function(response) {
-                                // DEBUG
-                                console.log('got response');
-                                $(self).attr('value', 'Updated.');
-                                var $alertdiv = $('<div id="notification"/>');
-                                $alertdiv.text(response);
-                                $alertdiv.bind('click', function() {
-                                    $(this).slideUp(200);
-                                });
-                                $(document.body).append($alertdiv);
-                                $("#notification").slideDown("slow"); 
-                                setTimeout(function() { $alertdiv.slideUp(200) }, 8000);
-                             },
-                    headers: { "X-CSRFToken": getCookie('csrftoken') },
-                    crossDomain: false,
-                    data: { "latitude": cur_latitude, 
-                            "longitude": cur_longitude,
-                            "street_address": cur_str_addr,
-                            "traffic_dense_level": tr_dense_lvl,
-                            "latlng": cur_latlng
-                          }
-                }); // end of ajax()
-                return false;
-              }
+    // Set Map to Current Location
+    // setMap();
+    // Keep Watching the User's Current Location
+    // setInterval("window.initiate_watchlocation()", 1000)
 
-            $(".checkin_buttons input").not(this).slideToggle('fast');
-            $(this).animate({ width: '100%' }, 'fast');
-            $(this).attr('value', 'Updating...');
+    // EVENTS
+    $(".checkin_buttons input").click(function() {
+        var self = this,
+        postCheckin = function() {
+         $.ajax({
+                url: '/-post/',
+                type: 'POST',
+                success: function(response) {
+                            // DEBUG
+                            console.log('got response');
+                            $(self).attr('value', 'Updated.');
+                            var $alertdiv = $('<div id="notification"/>');
+                            $alertdiv.text(response);
+                            $alertdiv.bind('click', function() {
+                                $(this).slideUp(200);
+                            });
+                            $(document.body).append($alertdiv);
+                            $("#notification").slideDown("slow"); 
+                            setTimeout(function() { $alertdiv.slideUp(200) }, 8000);
+                         },
+                headers: { "X-CSRFToken": getCookie('csrftoken') },
+                crossDomain: false,
+                data: { "latitude": cur_latitude, 
+                        "longitude": cur_longitude,
+                        "street_address": cur_str_addr,
+                        "traffic_dense_level": tr_dense_lvl,
+                        "latlng": cur_latlng
+                      }
+            }); // end of ajax()
+            return false;
+          }
 
-            tr_dense_lvl = parseInt($(this).attr("name"));
+        $(".checkin_buttons input").not(this).hide('fast');
+        $(this).animate({ width: '100%' }, 'fast');
+        $(this).attr('value', 'Updating...');
 
-            geocoder.geocode({'latLng': latlng}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {  
-                  cur_str_addr = results[0].formatted_address;
-                }
-                postCheckin();
-              } else {
-                alert("Geocoder failed due to: " + status);
-              }});
+        tr_dense_lvl = parseInt($(this).attr("name"));
+		
+		postCheckin();
+		$(this).attr('disabled', true)
 
-            // DEBUG
-            console.log("latitude: "+ cur_latitude +"\n longitude: "+ cur_longitude + "\n street_address: "+ cur_str_addr + "\n traffic_dense_level: " + tr_dense_lvl);
+        // DEBUG
+        console.log("latitude: "+ cur_latitude +"\n longitude: "+ cur_longitude + "\n street_address: "+ cur_str_addr + "\n traffic_dense_level: " + tr_dense_lvl);
 
-            }); // end of click()
-        }); // end of ready()
+        }); // end of click()
+    }); // end of ready()
 </script>
 {% endblock %}

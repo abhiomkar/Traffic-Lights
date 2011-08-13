@@ -84,7 +84,7 @@ Shell Quick Testing:
 Point Testing - 
 
 from traffic.models import *
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import *
 _checkin = Checkin()
 lat, lgt, str_addr, tdc = 37.617112, -122.3831031, "sf airport", 3
 _checkin = Checkin(latitude = lat, longitude = lgt, street_addr = str_addr,  traffic_dense_level = tdc,  point = Point(lat, lgt) )
@@ -93,4 +93,14 @@ _checkin.save()
 pnt = Point(12.9128118, 77.6092188)
 print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=4)))])
 print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('point')])
+
+
+test 2:
+------
+from traffic.models import *
+from django.contrib.gis.geos import *
+# silk board
+pnt = Point(12.9177456, 77.6237883, srid=24370)
+print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=10)))][0:6])
+print '\n'.join([str(q['point'].srid) for q in Checkin.objects.all().values('point')][0:6])
 

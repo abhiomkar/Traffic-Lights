@@ -9,6 +9,9 @@ from django.contrib.gis.measure import D
 # 
 #
 
+# SRID near India: 24370 
+# Only Supports: 4326
+
 class Setting(models.Model):
     something1 = models.IntegerField(max_length=5)
     something2 = models.IntegerField(max_length=10)
@@ -21,13 +24,13 @@ class Checkin(models.Model):
     status_update = models.CharField(max_length=9999, default="")
     traffic_dense_level = models.IntegerField(max_length=5, default=0)
     plus_ones = models.IntegerField(max_length=9999, default=0)
-    point = models.PointField(srid=24370)
+    point = models.PointField(geography=True, srid=4326)
     objects = models.GeoManager()
 
     def checkins_nearby_you(self, lat, lgt):
         # Checkin.objects.filter()
         # Checkin.objects.filter(point__distance_lte=(pnt, D(km=6)))
-        pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=24370)
+        pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=4326)
 
         qs = Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('-checkin_time')[0:6]
         #res = '{'
@@ -64,7 +67,7 @@ class Checkin(models.Model):
             : Traffic Dense Level
         """
         from django.contrib.gis.geos import Point
-        pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=24370)
+        pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=4326)
 
         try:
             _checkin = Checkin(latitude = lat, longitude = lgt, street_addr = st_addr, traffic_dense_level = tdc, point = pnt)

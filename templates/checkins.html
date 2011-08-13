@@ -46,15 +46,13 @@
         }
 
         function geoloc_query(pos) {
-            if(en_buttons == false) {
-                en_buttons = true;
-            }
             cur_latitude = pos.coords.latitude;
             cur_longitude = pos.coords.longitude;
-            cur_latlng= cur_latitude + ',' + cur_longitude
+            cur_latlng = cur_latitude + ',' + cur_longitude
+            getCheckins();
 
-            // console.log('lat: ' + pos.coords.latitude);
-            // console.log('lng: ' + pos.coords.longitude);
+            console.log('lat: ' + pos.coords.latitude);
+            console.log('lng: ' + pos.coords.longitude);
             // initialize(pos.coords.latitude, pos.coords.longitude);
         }
 
@@ -136,8 +134,6 @@
                 });
         }
 
-        getCheckins();
-        initiate_watchlocation();
 
         }); // end of ready()
 </script>
