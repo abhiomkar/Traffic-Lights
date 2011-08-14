@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'trlights', # Or path to database file if using sqlite3.
+        'NAME': 'trlights_staging', # Or path to database file if using sqlite3.
         'USER': 'postgres',                      # Not used with sqlite3.
         'PASSWORD': 'OpenHack#2011',                  # Not used with sqlite3.
         # 'PASSWORD': 'h4ck3r@zeroworld',                  # Not used with sqlite3.

@@ -31,6 +31,26 @@ class Checkin(models.Model):
         # Checkin.objects.filter()
         # Checkin.objects.filter(point__distance_lte=(pnt, D(km=6)))
         pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=4326)
+        qs = Checkin.objects.distance(pnt).order_by('distance')[0:10]
+        res = '['
+        for i, q in enumerate(qs):
+            ll = '%s,%s' % (q.latitude, q.longitude)
+            street_addr = q.street_addr
+            tr_dense = q.traffic_dense_level 
+            checkin_time = q.checkin_time 
+            res += "{latlng: '%s', street_addr: '%s', tr_dense: %s, checkin_time: '%s'}" % (ll, street_addr, tr_dense, checkin_time)
+            res += ", "
+
+        if res.endswith(", "):
+            res = res[:-2]
+
+        res += "]"
+        return res
+
+    def checkins_recent(self, lat, lgt):
+        # Checkin.objects.filter()
+        # Checkin.objects.filter(point__distance_lte=(pnt, D(km=6)))
+        pnt = fromstr('POINT(%s %s)' % (lat, lgt), srid=4326)
 
         qs = Checkin.objects.filter(point__distance_lt=(pnt, D(km=10))).order_by('-checkin_time')[0:6]
         #res = '{'
@@ -58,6 +78,7 @@ class Checkin(models.Model):
 
         res += "]"
         return res
+
 
     def do_checkin(self, lat, lgt, st_addr, tdc):
         """ Do checkin for the user

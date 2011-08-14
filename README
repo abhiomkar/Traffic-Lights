@@ -104,3 +104,11 @@ pnt = Point(12.9177456, 77.6237883, srid=24370)
 print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=10)))][0:6])
 print '\n'.join([str(q['point'].srid) for q in Checkin.objects.all().values('point')][0:6])
 
+
+test 3:
+-------
+from traffic.models import *
+from django.contrib.gis.geos import *
+# silk board
+pnt = Point(12.9128118, 77.6092188, srid=4326)
+print '\n'.join([q.street_addr for q in Checkin.objects.filter(point__distance_lt=(pnt, D(km=1000)))][0:6])

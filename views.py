@@ -25,6 +25,7 @@ def getcheckins(request):
     longitude = request.GET.get('longitude', '')
     _checkin = Checkin()
     response = _checkin.checkins_nearby_you(latitude, longitude)
+    # response = _checkin.checkins_recent(latitude, longitude)
     return HttpResponse(response)
 
 def post(request):
